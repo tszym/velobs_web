@@ -3,7 +3,7 @@ include_once '../key.php';
 include_once '../commonfunction.php';
 
 /*
- * List of functions - getMarkerIcon - updateMarkerIcon - getCategory - updateCategory - createCategory - deleteCategorys - getSubCategory - updateSubCategory - createSubCategory - deleteSubCategorys - getPoi - updatePoi - deletePois - deletePoisCorbeille - getCommune - updateCommune - createCommune - deleteCommunes - getPole - updatePole - createPole - deletePoles - getQuartier - updateQuartier - createQuartier - deleteQuartiers - getPriorite - updatePriorite - createPriorite - deletePriorites - getStatus - updateStatus - createStatus - deleteStatuss - getUser - updateUser - createUser - deleteUsers - resetPhotoPoi - isModerate - updateGeoPoi - resetGeoPoi - updateGeoDefaultMap - createPublicPoi - isPropPublic - normalize - is_in_polygon - getNumPageIdParam - getComments - displayComment - editComment - getPhotos
+ * List of functions - getMarkerIcon - updateMarkerIcon - getCategory - updateCategory - createCategory - deleteCategorys - getSubCategory - updateSubCategory - createSubCategory - deleteSubCategorys - getPoi - updatePoi - deletePois - deletePoisCorbeille - getCommune - updateCommune - createCommune - deleteCommunes - getPole - updatePole - createPole - deletePoles - getQuartier - updateQuartier - createQuartier - deleteQuartiers - getPriorite - updatePriorite - createPriorite - deletePriorites - getStatus - updateStatus - createStatus - deleteStatuss - getUser - updateUser - createUser - deleteUsers - resetPhotoPoi - isModerate - updateGeoPoi - resetGeoPoi - updateGeoDefaultMap - createPublicPoi - isPropPublic - normalize - getNumPageIdParam - getComments - displayComment - editComment - getPhotos
  */
 
 /*
@@ -2288,7 +2288,7 @@ function createPublicPoi()
             $longitude_poi = $_POST['longitude_poi'];
             $subcategory_id_subcategory = $_POST['subcategory_id_subcategory'];
             
-            $sql = "SELECT lib_subcategory FROM subcategory WHERE id_subcategory = " . $subcategory_id_subcategory;
+            $sql = "SELECT lib_subcategory FROM subcategory WHERE id_subcategory = " . mysql_real_escape_string($subcategory_id_subcategory);
             $result = mysql_query($sql);
             $row = mysql_fetch_assoc($result);
             $lib_subcategory = mysql_real_escape_string($row['lib_subcategory']);
@@ -2728,18 +2728,7 @@ function normalize($string)
     return strtr($string, $table);
 }
 
-/*
- * Function name : is_in_polygon Input : tableau de latitudes, tableau de longitudes, latitude et longitude du point à chercher, nombre de points Output : 0 si pas dans le polygone, 1 si dans le polygone Object : find point in polygon Date : Nov. 30, 2012
- */
-function is_in_polygon($points_polygon, $vertices_x, $vertices_y, $longitude_x, $latitude_y)
-{
-    $i = $j = $c = 0;
-    for ($i = 0, $j = $points_polygon; $i < $points_polygon; $j = $i ++) {
-        if ((($vertices_y[$i] > $latitude_y != ($vertices_y[$j] > $latitude_y)) && ($longitude_x < ($vertices_x[$j] - $vertices_x[$i]) * ($latitude_y - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i])))
-            $c = ! $c;
-    }
-    return $c;
-}
+
 
 /*
  * Function name : getComments Input : id Output : json Object : get comments per ID Date : Dec. 13, 2015

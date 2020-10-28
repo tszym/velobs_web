@@ -40,7 +40,6 @@
 				}
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
-						//echo "Is in polygon!";
 						$commune_id_commune = $row['id_commune'];
 						$lib_commune = $row['lib_commune'];
 				}								
@@ -49,7 +48,6 @@
 				$sql = "SELECT id_pole, lib_pole FROM pole where st_within(st_geomfromtext('POINT(".$longitude_poi." ".$latitude_poi.")'), geom_pole)";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
-						//echo "Is in polygon!";
 						$pole_id_pole = $row['id_pole'];
 						$lib_pole = $row['lib_pole'];
 				}
@@ -63,58 +61,7 @@
 		}
 	}
 	
-	/*	Function name	: isWithinPolygons
-	 * 	Input			: $geom_value, $latitude_poi and $longitude_poi
-	 * 	Output		: if within polygons and outside the holes 1 else 0 
-	 * 	Object		: checks if the poi belongs to polygons of the geom
-	 *               POLYGON((x1 y1,x2 y2),(x3 y3,x4 y4),(x5 y5,x6 y6)) 
-	 *               MULTIPOLYGON(((x1 y1,x2 y2),(x3 y3,x4 y4)),((x5 y5,x6 y6)(x7 y7,x5 y5)))
-	 * 	Date			: novembre 2017
-	 */	
-	function isWithinPolygons($geom_value, $latitude_poi, $longitude_poi){		
-		// get all polygons
-		if (substr($geom_value,0,1) == 'M') {
-			$start = 15;
-			$length = -3;
-		}
-		else{
-			$start = 9;
-			$length = -2;
-		}
-		$polygons = explode(')),((', substr($geom_value, $start, $length)); 
-		// check all polygons
-		$inPolygon = FALSE;
-		for ($i = 0; ($i < count($polygons)) && !$inPolygon ; $i++) {
-			// get rings
-			$rings = explode('),(', $polygons[$i]); 				
-			if (isWithinPolygon($rings[0], $latitude_poi, $longitude_poi)){
-				$inHole = FALSE;
-				for ($j = 1; ($j < count($rings)) && !$inHole; $j++) {					
-					$inHole = isWithinPolygon($rings[$j], $latitude_poi, $longitude_poi);
-				}
-				$inPolygon = !$inHole;
-			}
-		}
-		return ($inPolygon);
-	}
-	/*	Function name	: isWithinPolygon
-	 * 	Input			: $polyg , $latitude_poi and $longitude_poi
-	* 	Output		: if within the simple polygon  1 else 0
-	* 	Object		: check if the poi belongs to a simple polygon
-	* 	Date			: novembre 2017
-	*/
-	function isWithinPolygon($polyg, $latitude_poi, $longitude_poi){
-		$tab = explode(',',$polyg);
-		$vertices_x = array();
-		$vertices_y = array();
-		for ($i = 0; $i < count($tab) - 1; $i++) {
-			$temp = explode(" ",$tab[$i]);
-			array_push($vertices_x,$temp[0]);
-			array_push($vertices_y,$temp[1]);
-		}
-		$points_polygon = count($vertices_x) - 1;
-		return(is_in_polygon($points_polygon, $vertices_x, $vertices_y, $longitude_poi, $latitude_poi));	
-	}			
+			
 	
 	/* 	Function name 	: generate_image_thumbnail
 	 * 	Input			: une url d'image en entrée, le path en sortie, la largeur et la hauteur
