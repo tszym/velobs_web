@@ -2549,6 +2549,7 @@ function getNumPageIdParam($idToFind, $usertype, $numRecordPerPage)
             $line = - 1;
             switch ($usertype) {
                 case '1':
+                case '4':
                     $sql = "SELECT poi.id_poi FROM poi WHERE delete_poi = FALSE ORDER BY id_poi DESC";
                     $result = mysql_query($sql);
                     
@@ -2631,43 +2632,7 @@ function getNumPageIdParam($idToFind, $usertype, $numRecordPerPage)
                     }
                     
                     break;
-                case '4':
-                    $sql = "SELECT poi.*, 
-									subcategory.lib_subcategory, 
-									commune.lib_commune, 
-									pole.lib_pole, 
-									quartier.lib_quartier, 
-									priorite.lib_priorite, 
-									status.lib_status, 
-									x(poi.geom_poi) AS X, 
-									y(poi.geom_poi) AS Y 
-								FROM poi 
-								INNER JOIN subcategory ON (subcategory.id_subcategory = poi.subcategory_id_subcategory) 
-								INNER JOIN commune ON (commune.id_commune = poi.commune_id_commune) 
-								INNER JOIN pole ON (pole.id_pole = poi.pole_id_pole) 
-								INNER JOIN quartier ON (quartier.id_quartier = poi.quartier_id_quartier) 
-								INNER JOIN priorite ON (priorite.id_priorite = poi.priorite_id_priorite) 
-								INNER JOIN status ON (status.id_status = poi.status_id_status) 
-								WHERE pole_id_pole IN (" . $_SESSION['pole'] . ") 
-									AND delete_poi = FALSE 
-								ORDER BY id_poi DESC";
-                    $result = mysql_query($sql);
-                    
-                    $i = 0;
-                    while ($row = mysql_fetch_array($result)) {
-                        $i ++;
-                        if ($idToFind == $row['id_poi']) {
-                            $line = $i;
-                        }
-                    }
-                    
-                    if ($line != - 1) {
-                        $numerofpage = ceil($line / $numRecordPerPage);
-                        echo '' . $numerofpage . '';
-                    } else {
-                        echo '-1';
-                    }
-                    break;
+                
             }
             
             mysql_free_result($result);
