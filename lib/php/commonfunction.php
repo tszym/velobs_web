@@ -35,24 +35,24 @@
 				//détermination de la commune concernée par croisement du polygone de la commune avec latitude et longitude				
 				$commune_id_commune = 99999;
 				$sql = "SELECT id_commune, AsText(geom_commune) AS geom, lib_commune FROM commune";
+				$sql = "SELECT id_commune, lib_commune FROM commune where st_within(st_geomfromtext('POINT(".$longitude_poi." ".$latitude_poi.")'), geom_commune)";
+				if (DEBUG){
+					error_log(date("Y-m-d H:i:s") . " " .__FUNCTION__ . " - commonfunction.php -  ".$latitude_poi.", ".$longitude_poi." $sql\n", 3, LOG_FILE);
+				}
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
-					if (isWithinPolygons($row['geom'], $latitude_poi, $longitude_poi)) {												
 						//echo "Is in polygon!";
 						$commune_id_commune = $row['id_commune'];
 						$lib_commune = $row['lib_commune'];
-					}
 				}								
 				//détermination du pole concerné par croisement du polygone du pole avec latitude et longitude
 				$pole_id_pole = 9;
-				$sql = "SELECT id_pole, AsText(geom_pole) AS geom, lib_pole FROM pole";
+				$sql = "SELECT id_pole, lib_pole FROM pole where st_within(st_geomfromtext('POINT(".$longitude_poi." ".$latitude_poi.")'), geom_pole)";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_array($result)) {
-					if (isWithinPolygons($row['geom'], $latitude_poi, $longitude_poi)){	
 						//echo "Is in polygon!";
 						$pole_id_pole = $row['id_pole'];
 						$lib_pole = $row['lib_pole'];
-					}
 				}
 				$array = [$commune_id_commune,$lib_commune,$pole_id_pole,$lib_pole];
 				return $array;
