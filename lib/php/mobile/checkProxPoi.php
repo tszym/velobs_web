@@ -44,7 +44,7 @@
                 	INNER JOIN subcategory ON subcategory.id_subcategory = poi.subcategory_id_subcategory
                 	INNER JOIN commune ON commune.id_commune = poi.commune_id_commune
                 	INNER JOIN priorite ON poi.priorite_id_priorite = priorite.id_priorite
-                	WHERE priorite.non_visible_par_public = 0
+                	WHERE priorite.visible_public_par_defaut = 1
                 				AND moderation_poi = 1 
                 	HAVING distance < ".$buffer." 
                 	ORDER BY distance";
