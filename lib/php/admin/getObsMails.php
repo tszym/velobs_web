@@ -90,11 +90,11 @@ if (isset($_SESSION['user']) && $_SESSION["type"] == 1) {
             
             Vous recevez ce mail car vous avez soumis au moins une observation ou un commentaire sur <a href=\"https://velobs.2p2r.org\" target=\"_blank\">VelObs</a>.
             
-            Bonne nouvelle… un grand ménage d’automne est en cours sur <a href=\"https://velobs.2p2r.org\" target=\"_blank\">VelObs</a> !
+            Bonne nouvelle… un grand ménage d’automne a déjà démarré !
             
             Certaines zones n’étant couvertes par aucun modérateur bénévole, des observations sont modérées tardivement. Nous comprenons la frustration que cette situation peut impliquer et nous en sommes désolés. Nous espérons à l’avenir, avec votre participation, parvenir à nous maintenir à jour.
             
-            Nous requérons donc votre aide pour mettre à jour les observations et faciliter le travail avec les collectivités. Vous pouvez nous signaler, en ajoutant un commentaire sur les observations :<ul><li>celles dont le problème est réglé, ce qui nous permettra de les clore</li><li>celles qui sont toujours en cours quelques mois/années après leur ouverture</li></ul>Vous trouverez en bas de ce courrier la liste des observations et/ou des commentaires que vous avez soumis pour vous aider dans cette tâche. N'hésitez pas à mettre à jour les autres observations qui seraient encore ouvertes et qui selon vous seraient à clôturer.
+            Nous requérons donc votre aide pour mettre à jour les observations et faciliter le travail avec les collectivités. Vous pouvez nous signaler, en ajoutant un commentaire sur les observations (si vous le pouvez lors de vos déplacements autorisés...ou dès le futur déconfinement) :<ul><li>celles dont le problème est réglé, ce qui nous permettra de les clore</li><li>celles qui sont toujours en cours quelques mois/années après leur ouverture</li></ul>Vous trouverez en bas de ce courrier la liste des observations et/ou des commentaires que vous avez soumis pour vous aider dans cette tâche. N'hésitez pas à mettre à jour les autres observations qui seraient encore ouvertes et qui selon vous seraient à clôturer.
 
             L’équipe de modérateurs étant en franc déficit d’effectifs (notamment sur le centre-ville toulousain), si vous avez un peu de temps à donner et pouvez renforcer l’équipe, votre aide sera la bienvenue.
             
@@ -138,7 +138,7 @@ if (isset($_SESSION['user']) && $_SESSION["type"] == 1) {
                     }
                     $userMailContent .= "\r\n";
                     echo $userMailContent;
-                   //sendMail($user, "Mise à jour VelObs", nl2br($globalMailcontent) .$userMailContent);
+                   sendMail($user, "Mise à jour VelObs", nl2br($globalMailcontent) .$userMailContent);
                 }
             }
 
