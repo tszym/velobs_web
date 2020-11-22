@@ -20,6 +20,9 @@ include_once '../key.php';
 			INNER JOIN pole ON poi.pole_id_pole = pole.id_pole 
 			INNER JOIN territoire ON pole.territoire_id_territoire = territoire.id_territoire
 			INNER JOIN subcategory ON poi.subcategory_id_subcategory = subcategory.id_subcategory 
+			INNER JOIN priorite ON poi.priorite_id_priorite = priorite.id_priorite
+            WHERE priorite.visible_public_par_defaut = 1
+            AND poi.moderation_poi = 1 
 			GROUP BY poi_poi_id 
 			ORDER BY nb_votes desc 
 			LIMIT " . $nbObservationsToReturn;
